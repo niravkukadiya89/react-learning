@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 class Counter extends Component {
-  state = { 
-    value: this.props.counter.value,
-    tags:['tag1','tag2','tag3','tag4']
-   };
+  // state = { 
+  //   value: this.props.counter.value,
+  //   tags:['tag1','tag2','tag3','tag4']
+  //  };
   styles = {
     fontSize: 25,
     fontWeight: "bold"
@@ -15,11 +15,11 @@ class Counter extends Component {
   //   this.countIncrement = this.countIncrement.bind(this);
   // }
 
-  countIncrement = (product) => {
-    //console.log('increment',this);
-    //console.log(product);
-    this.setState({value : this.state.value + 1});
-  }
+  // countIncrement = (product) => {
+  //   //console.log('increment',this);
+  //   //console.log(product);
+  //   this.setState({value : this.state.value + 1});
+  // }
 
   argCountIncrement = () => {
     this.countIncrement({id:1})
@@ -33,11 +33,8 @@ class Counter extends Component {
       <div>
         {/* <h2>Header #{this.props.id}</h2> */}
        
-       
-
-
         <span style={this.styles} className={this.getClasses()}>{this.formatCount()}</span>
-        <button onClick={() => {this.countIncrement(1)}} className="btn btn-seconday btn-sm m-2" id="submit">
+        <button onClick={() => this.props.onIncrement(this.props.counter) } className="btn btn-seconday btn-sm m-2" id="submit">
           Increment
         </button>
         <button onClick={() => this.props.onDelete(this.props.counter.id)} className="btn btn-danger btn-sm m-2">Delete</button>
@@ -50,14 +47,14 @@ class Counter extends Component {
 
   getClasses() {
     let classes = "badge m-2 badge-";
-    classes += this.state.value === 0 ? "warning" : "primary";
+    classes += this.props.counter.value === 0 ? "warning" : "primary";
     return classes;
   }
 
   formatCount() {
     //const { count } = this.state;
     // return this.state.count === 0 ? "Zero" : this.state.count;
-    return this.state.value === 0 ? "Zero" : this.state.value;
+    return this.props.counter.value === 0 ? "Zero" : this.props.counter.value;
   }
 }
 
