@@ -4,6 +4,7 @@ import React, {
 import Counters from "./components/counters";
 import './App.css';
 import Navbar from './components/navbar';
+import Movie from './components/movie';
 
 class App extends Component {
   state = {
@@ -64,6 +65,8 @@ class App extends Component {
         onIncrement = {this.handleIncrement}
         onReset = {this.restCounter}
         />
+
+        <Movie></Movie>
       </main> 
     </React.Fragment >
     );
