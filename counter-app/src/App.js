@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import Counters from "./components/counters";
-import './App.css';
-import Navbar from './components/navbar';
-import Movie from './components/movie';
+import "./App.css";
+import Navbar from "./components/navbar";
+import Movie from "./components/movie";
 
 class App extends Component {
   state = {
@@ -37,6 +37,18 @@ class App extends Component {
     });
   };
 
+  handleDecrement = countera => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(countera);
+    counters[index] = {
+      ...countera
+    };
+    counters[index].value--;
+    this.setState({
+      counters
+    });
+  };
+
   handleDelete = CounterID => {
     //  console.log('Handle Delete event',CounterID);
     const counters = this.state.counters.filter(c => c.id !== CounterID);
@@ -57,27 +69,22 @@ class App extends Component {
     return (
       <React.Fragment>
         <Navbar
-    totalcounters={this.state.counters.filter(c => c.value > 0).length}
-  />
+          totalcounters={this.state.counters.filter(c => c.value > 0).length}
+        />
         <main className="container">
-
-        
           <Counters
             counters={this.state.counters}
             onDelete={this.handleDelete}
             onIncrement={this.handleIncrement}
+            onDecrement={this.handleDecrement}
             onReset={this.restCounter}
           />
 
-          <Movie></Movie>
-        </main>        
-       
-     
-    </React.Fragment >
- 
+          <br />
 
-
-      
+          <Movie />
+        </main>
+      </React.Fragment>
     );
   }
 }
