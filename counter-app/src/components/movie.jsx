@@ -7,7 +7,7 @@ import { getMovies } from "../services/fakeMovieService";
 class Movie extends Component {
   state = {
     movie: getMovies(),
-    pageSize : 1
+    pageSize : 4
   };
 
   handleLike = movie => {
@@ -65,7 +65,7 @@ class Movie extends Component {
           </tbody>
         </table>
 
-        <Pagination pageItemCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange} />
+        <Pagination ItemsCount={count} pageSize={this.state.pageSize} onPageChange={this.handlePageChange} />
 
 
       </React.Fragment>
