@@ -10,7 +10,8 @@ class Movie extends Component {
     movie: [],
     genres: [],
     pageSize: 4,
-    currentPage: 1
+    currentPage: 1,
+    selectedGenres: []
   };
 
   componentDidMount() {
@@ -40,11 +41,20 @@ class Movie extends Component {
 
   render() {
     const { length: count } = this.state.movie;
-    const { pageSize, currentPage, movie: AllMovies, genres } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      movie: AllMovies,
+      genres,
+      selectedGenres
+    } = this.state;
 
     if (count === 0) return <p>There are no movie in the database.</p>;
 
-    const movie = Paginator(AllMovies, currentPage, pageSize);
+    const filtered = selectedGenres
+      ? AllMovies.filter(m => m.genre._id === selectedGenres._id)
+      : AllMovies;
+    const movie = Paginator(filtered, currentPage, pageSize);
     return (
       <div className="row">
         <div className="col-3">
