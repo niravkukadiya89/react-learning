@@ -15,11 +15,12 @@ class Movie extends Component {
   };
 
   componentDidMount() {
-    this.setState({ movie: getMovies(), genres: getGenres() });
+    const genres = [{ name: "All Movies" }, ...getGenres()];
+    this.setState({ movie: getMovies(), genres });
   }
 
   onGenresSelect = genre => {
-    this.setState({ selectedGenres: genre });
+    this.setState({ selectedGenres: genre, currentPage: 1 });
   };
 
   handleLike = movie => {
@@ -35,7 +36,6 @@ class Movie extends Component {
   };
 
   handlePageChange = page => {
-    console.log(page);
     this.setState({ currentPage: page });
   };
 
@@ -51,9 +51,11 @@ class Movie extends Component {
 
     if (count === 0) return <p>There are no movie in the database.</p>;
 
-    const filtered = selectedGenres
-      ? AllMovies.filter(m => m.genre._id === selectedGenres._id)
-      : AllMovies;
+    const filtered =
+      selectedGenres && selectedGenres._id
+        ? AllMovies.filter(m => m.genre._id === selectedGenres._id)
+        : AllMovies;
+
     const movie = Paginator(filtered, currentPage, pageSize);
     return (
       <div className="row">
@@ -65,7 +67,7 @@ class Movie extends Component {
           />
         </div>
         <div className="col">
-          <p>Showing {count} movies in the database.</p>
+          <p>Showing {filtered.length} movies in the database.</p>
           <table className="table">
             <tbody>
               <tr>
@@ -102,7 +104,7 @@ class Movie extends Component {
           </table>
 
           <Pagination
-            ItemsCount={count}
+            ItemsCount={filtered.length}
             pageSize={pageSize}
             currentPage={currentPage}
             onPageChange={this.handlePageChange}
